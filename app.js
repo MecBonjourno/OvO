@@ -8,6 +8,7 @@ require('./models/user.model')
 const PORT = 5000
 const uri = process.env.MONGO_URI;
 
+app.use(express.json())
 app.use(require('./routes/auth'))
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true})
