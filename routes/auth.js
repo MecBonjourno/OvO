@@ -4,13 +4,13 @@ const mongoose = require('mongoose');
 const User = mongoose.model("User")
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const requireLogin = require('../middleware/requireLogin')
 require('dotenv').config();
-
 
 const jwtsct = process.env.JWT_SCT;
 
-// router.get('/', (req, res) => {
-//     res.send("hello")
+// router.get('/protected', requireLogin, (req, res) => {
+//     res.send("hello user")
 // })
 
 router.post('/signup', (req, res) => {
