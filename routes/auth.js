@@ -14,7 +14,7 @@ const jwtsct = process.env.JWT_SCT;
 // })
 
 router.post('/signup', (req, res) => {
-    const {name,email,password} = req.body
+    const {name,email,password, pic} = req.body
     if(!email || !password || !name){
      return res.status(422).json({error: "please fill all the fields"})
     }
@@ -29,7 +29,8 @@ router.post('/signup', (req, res) => {
                 const user = new User({
                     email,
                       name,
-                       password: hashedPassword
+                       password: hashedPassword,
+                        pic
                   })
           
                   user.save()
@@ -59,8 +60,8 @@ router.post('/signin', (req, res) => {
                  const token = jwt.sign({
                      _id: savedUser._id
                     }, jwtsct)
-                    const {_id,name,email} = savedUser
-                    res.json({token, user:{_id,name,email}})
+                    const {_id,name,email,followers,following,pic} = savedUser
+                    res.json({token, user:{_id,name,email,followers,following,pic}})
              }
              else{
                 return res.status(422).json({message: 'Invalid email or password'})

@@ -14,6 +14,16 @@ router.get('/allposts', requireLogin, (req, res) => {
         .catch(err => {console.log(err)})
 })
 
+router.get('/getfollowposts', requireLogin, (req, res) => {
+    Post.find({postedBy:{$in:[req.user.following]}})
+      .populate("postedBy", "_id name")
+      .populate("comments.postedBy", "_id name")
+        .then(posts => {
+            res.json({posts})
+        })
+        .catch(err => {console.log(err)})
+})
+
 router.post('/post', requireLogin, (req, res)=>{
     const {title, body, pic} = req.body
     console.log(pic)
